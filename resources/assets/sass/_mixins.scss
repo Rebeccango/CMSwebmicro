@@ -1,0 +1,1218 @@
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+@mixin transition-property($property...) {
+    -moz-transition-property:    $property;
+    -o-transition-property:      $property;
+    -webkit-transition-property: $property;
+    transition-property:         $property;
+}
+@mixin transition-duration($duration...) {
+    -moz-transition-property:    $duration;
+    -o-transition-property:      $duration;
+    -webkit-transition-property: $duration;
+    transition-property:         $duration;
+}
+@mixin transition-timing-function($timing...) {
+    -moz-transition-timing-function:    $timing;
+    -o-transition-timing-function:      $timing;
+    -webkit-transition-timing-function: $timing;
+    transition-timing-function:         $timing;
+}
+@mixin transition-delay($delay...) {
+    -moz-transition-delay:    $delay;
+    -o-transition-delay:      $delay;
+    -webkit-transition-delay: $delay;
+    transition-delay:         $delay;
+}
+@mixin box-s($x, $y, $offset, $color, $inset: false) {
+    $ie-color: ie-hex-str($color);
+
+  @if $inset {
+	    -webkit-box-shadow: inset $x $y $offset $color;
+			    box-shadow: inset $x $y $offset $color;
+	} @else {
+	    -webkit-box-shadow: $x $y $offset $color;
+			    box-shadow: $x $y $offset $color;
+		filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=#{$x}, OffY=#{$y}, Color='#{$ie-color}');
+	}
+}
+
+@mixin border-radius($radius:.25em) {
+  border-radius: $radius;
+}
+
+// antialiasing mode font rendering
+
+@mixin font-smoothing {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// clearfix
+
+@mixin clearfix {
+  &::after {
+    clear: both;
+    content: "";
+    display: block;
+  }
+}
+
+
+@function shade(
+    $color,
+    $percent
+  ) {
+
+  @return mix(#000, $color, $percent);
+}
+@function tint(
+    $color,
+    $percent
+  ) {
+
+  @return mix(#fff, $color, $percent);
+}
+
+
+// breakpoints
+
+$S:     480px;
+$M:     600px;
+$L:     1000px;
+
+// media queries
+
+@mixin MQ($canvas) {
+  @if $canvas == S {
+   @media only screen and (min-width: $S) { @content; }
+  }
+  @else if $canvas == M {
+   @media only screen and (min-width: $M) { @content; }
+  }
+  @else if $canvas == L {
+   @media only screen and (min-width: $L) { @content; }
+  }
+}
+
+// super light grid system
+
+@mixin column($percentage, $float-direction:left) {
+  width: 100% * $percentage;
+  float: $float-direction;
+}
+
+
+@mixin center($xy:xy) {
+  @if $xy == xy {
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    transform: translateX(-50%) translateY(-50%);
+  }
+  @else if $xy == x {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+  @else if $xy == y {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+  }
+}
+@mixin box-sizing($box-model) {
+  -webkit-box-sizing: $box-model; // Safari <= 5
+     -moz-box-sizing: $box-model; // Firefox <= 19
+          box-sizing: $box-model;
+}
+@mixin appearance ($value) {
+	-webkit-appearance: $value;
+	   -moz-appearance: $value;
+	        appearance: $value;
+}
+@mixin user-select ($value: none) {
+	-webkit-user-select: $value;
+	   -moz-user-select: $value;
+	    -ms-user-select: $value;
+	        user-select: $value;
+}
+@mixin transform($transforms) {
+	   -moz-transform: $transforms;
+	     -o-transform: $transforms;
+	    -ms-transform: $transforms;
+	-webkit-transform: $transforms;
+          transform: $transforms;
+}
+// rotate
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+// scale
+@mixin scale($scale) {
+	 @include transform(scale($scale));
+}
+// translate
+@mixin translate ($x, $y) {
+   @include transform(translate($x, $y));
+}
+// skew
+@mixin skew ($x, $y) {
+   @include transform(skew(#{$x}deg, #{$y}deg));
+}
+//transform origin
+@mixin transform-origin ($origin) {
+    moz-transform-origin: $origin;
+	     -o-transform-origin: $origin;
+	    -ms-transform-origin: $origin;
+	-webkit-transform-origin: $origin;
+          transform-origin: $origin;
+}
+@mixin animation ($delay, $duration, $animation) {
+    -webkit-animation-delay: $delay;
+    -webkit-animation-duration: $duration;
+    -webkit-animation-name: $animation;
+    -webkit-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    -moz-animation-delay: $delay;
+    -moz-animation-duration: $duration;
+    -moz-animation-name: $animation;
+    -moz-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    -o-animation-delay: $delay;
+    -o-animation-duration: $duration;
+    -o-animation-name: $animation;
+    -o-animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+
+    animation-delay: $delay;
+    animation-duration: $duration;
+    animation-name: $animation;
+    animation-fill-mode: forwards; /* this prevents the animation from restarting! */
+}
+
+//FROM elements.less
+
+@mixin noselect() {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@mixin blur($size:1px) {
+    filter: blur($size);
+    -webkit-filter: blur($size);
+    -moz-filter: blur($size);
+    -o-filter: blur($size);
+    -ms-filter: blur($size);
+}
+
+@mixin vertical-align() {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+@mixin arrow-down ($size:4px) {
+    border: solid transparent;
+    content: "";
+    height: 0;
+    width: 0;
+    top: 50%;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: #fff;
+    border-width: 4px;
+    margin-left: 8px;
+    margin-top: -2px;
+}
+
+@mixin gradient($color:#F5F5F5, $start: #EEE, $stop: #FFF) {
+    background: $color;
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, $start), color-stop(1, $stop));
+    background: -ms-linear-gradient(bottom, $start, $stop);
+    background: -moz-linear-gradient(center bottom, $start 0%, $stop 100%);
+    background: -o-linear-gradient($stop, $start);
+    // filter: e(%(  "progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)", $stop, $start));
+}
+
+@mixin bw-gradient($color:#F5F5F5, $start: 0, $stop: 255) {
+    background: $color;
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb($start, $start, $start)), color-stop(1, rgb($stop, $stop, $stop)));
+    background: -ms-linear-gradient(bottom, rgb($start, $start, $start) 0%, rgb($stop, $stop, $stop) 100%);
+    background: -moz-linear-gradient(center bottom, rgb($start, $start, $start) 0%, rgb($stop, $stop, $stop) 100%);
+    background: -o-linear-gradient(rgb($stop, $stop, $stop), rgb($start, $start, $start));
+    // filter: e(%(  "progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)", rgb($stop, $stop, $stop), rgb($start, $start, $start)));
+}
+
+@mixin bordered($top-color:#EEE, $bottom-color: #EEE, $left-color: #EEE, $right-color: #EEE) {
+    border-top: solid 1px $top-color;
+    border-left: solid 1px $left-color;
+    border-right: solid 1px $right-color;
+    border-bottom: solid 1px $bottom-color;
+}
+
+@mixin border($top:1px, $border: solid #EEE, $bottom:1px, $left:1px,$right:1px) {
+    border-top: $top $border;
+    border-left: $left $border;
+    border-right: $right $border;
+    border-bottom: $bottom $border;
+}
+
+@mixin drop-shadow($x-axis:0, $alpha: 0.1, $blur: 2px, $y-axis: 1px) {
+    -webkit-box-shadow: $x-axis $y-axis $blur rgba(0, 0, 0, $alpha);
+    -moz-box-shadow: $x-axis $y-axis $blur rgba(0, 0, 0, $alpha);
+    box-shadow: $x-axis $y-axis $blur rgba(0, 0, 0, $alpha);
+}
+
+@mixin text-shadow ($string:0 1px 3px rgba(0, 0, 0, 0.8)) {
+    text-shadow: $string;
+}
+
+@mixin rounded($radius:2px) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    -o-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin border-radius($topright:0, $bottomleft: 0, $bottomright: 0, $topleft: 0) {
+    -webkit-border-top-right-radius: $topright;
+    -webkit-border-bottom-right-radius: $bottomright;
+    -webkit-border-bottom-left-radius: $bottomleft;
+    -webkit-border-top-left-radius: $topleft;
+    -moz-border-radius-topright: $topright;
+    -moz-border-radius-bottomright: $bottomright;
+    -moz-border-radius-bottomleft: $bottomleft;
+    -moz-border-radius-topleft: $topleft;
+    border-top-right-radius: $topright;
+    border-bottom-right-radius: $bottomright;
+    border-bottom-left-radius: $bottomleft;
+    border-top-left-radius: $topleft;
+    @include background-clip(padding-box);
+}
+
+@mixin opacity($opacity:0.5) {
+    -moz-opacity: $opacity;
+    -khtml-opacity: $opacity;
+    -webkit-opacity: $opacity;
+    opacity: $opacity;
+    $opperc: $opacity * 100;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(opacity=${opperc})";
+    filter:"alpha(opacity=${opperc})";
+}
+
+@mixin transition-duration($duration:0.2s) {
+    -moz-transition-duration: $duration;
+    -webkit-transition-duration: $duration;
+    -o-transition-duration: $duration;
+    transition-duration: $duration;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+@mixin transform($arguments-list...) {
+    -webkit-transform: $arguments-list;
+    -moz-transform: $arguments-list;
+    -o-transform: $arguments-list;
+    -ms-transform: $arguments-list;
+    transform: $arguments-list;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+@mixin rotation($deg:5deg) {
+    @include transform(rotate($deg));
+}
+
+@mixin scale($radio:1.5) {
+    @include transform(scale($radio));
+}
+
+@mixin trans($arguments-list...) {
+    -webkit-transition: $arguments-list;
+    -moz-transition: $arguments-list;
+    -o-transition: $arguments-list;
+    transition: $arguments-list;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+@mixin transition($duration:0.2s, $ease:ease-out) {
+    -webkit-transition: all $duration $ease;
+    -moz-transition: all $duration $ease;
+    -o-transition: all $duration $ease;
+    transition: all $duration $ease;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+@mixin inner-shadow($horizontal:0, $alpha:0.4, $blur:2px, $vertical:1px) {
+    -webkit-box-shadow: inset $horizontal $vertical $blur rgba(0, 0, 0, $alpha);
+    -moz-box-shadow: inset $horizontal $vertical $blur rgba(0, 0, 0, $alpha);
+    box-shadow: inset $horizontal $vertical $blur rgba(0, 0, 0, $alpha);
+}
+
+@mixin box-shadow($arguments...) {
+    -webkit-box-shadow: $arguments;
+    -moz-box-shadow: $arguments;
+    box-shadow: $arguments;
+}
+
+@mixin boxShadow($arguments-list...) {
+    -webkit-box-shadow: $arguments-list;
+    -moz-box-shadow: $arguments-list;
+    box-shadow: $arguments-list;
+}
+
+@mixin box-sizing($sizing:border-box) {
+    -ms-box-sizing: $sizing;
+    -moz-box-sizing: $sizing;
+    -webkit-box-sizing: $sizing;
+    box-sizing: $sizing;
+}
+
+@mixin user-select($argument:none) {
+    -webkit-user-select: $argument;
+    -moz-user-select: $argument;
+    -ms-user-select: $argument;
+    user-select: $argument;
+}
+
+@mixin columns($colwidth:250px, $colcount: 0, $colgap: 50px, $columnRuleColor: #EEE, $columnRuleStyle: solid, $columnRuleWidth: 1px) {
+    -moz-column-width: $colwidth;
+    -moz-column-count: $colcount;
+    -moz-column-gap: $colgap;
+    -moz-column-rule-color: $columnRuleColor;
+    -moz-column-rule-style: $columnRuleStyle;
+    -moz-column-rule-width: $columnRuleWidth;
+    -webkit-column-width: $colwidth;
+    -webkit-column-count: $colcount;
+    -webkit-column-gap: $colgap;
+    -webkit-column-rule-color: $columnRuleColor;
+    -webkit-column-rule-style: $columnRuleStyle;
+    -webkit-column-rule-width: $columnRuleWidth;
+    column-width: $colwidth;
+    column-count: $colcount;
+    column-gap: $colgap;
+    column-rule-color: $columnRuleColor;
+    column-rule-style: $columnRuleStyle;
+    column-rule-width: $columnRuleWidth;
+}
+
+@mixin translate($x:0, $y:0) {
+    @include transform(translate($x, $y));
+}
+
+@mixin background-clip($argument:padding-box) {
+    -moz-background-clip: $argument;
+    -webkit-background-clip: $argument;
+    background-clip: $argument;
+}
+
+.checkmark-animation {
+    vertical-align: middle;
+    margin-top: -3px;
+}
+
+.checkmark {
+    stroke: white;
+    stroke-dashoffset: 745.74853515625;
+    stroke-dasharray: 745.74853515625;
+    animation: dash 2s ease-out forwards normal;
+}
+@keyframes dash {
+    0% {
+        stroke-dashoffset: 745.74853515625;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+.ellip {
+    display: block;
+    height: 100%;
+}
+
+.ellip-line {
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    max-width: 100%;
+}
+
+.ellip,
+.ellip-line {
+    position: relative;
+    overflow: hidden;
+}
+
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999998;
+}
+
+#loader {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #3498db;
+    -webkit-animation: spin 2s linear infinite;
+    /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 2s linear infinite;
+    /* Chrome, Firefox 16+, IE 10+, Opera */
+    z-index: 99999999;
+}
+
+#loader:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #e74c3c;
+    -webkit-animation: spin 3s linear infinite;
+    /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 3s linear infinite;
+    /* Chrome, Firefox 16+, IE 10+, Opera */
+}
+
+#loader:after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #f9c922;
+    -webkit-animation: spin 1.5s linear infinite;
+    /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 1.5s linear infinite;
+    /* Chrome, Firefox 16+, IE 10+, Opera */
+}
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);
+        /* IE 9 */
+        transform: rotate(0deg);
+        /* Firefox 16+, IE 10+, Opera */
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);
+        /* IE 9 */
+        transform: rotate(360deg);
+        /* Firefox 16+, IE 10+, Opera */
+    }
+}
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);
+        /* IE 9 */
+        transform: rotate(0deg);
+        /* Firefox 16+, IE 10+, Opera */
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);
+        /* IE 9 */
+        transform: rotate(360deg);
+        /* Firefox 16+, IE 10+, Opera */
+    }
+}
+
+#loader-wrapper .loader-section {
+    position: fixed;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: #fff;
+    z-index: 1000;
+    -webkit-transform: translateX(0);
+    /* Chrome, Opera 15+, Safari 3.1+ */
+    -ms-transform: translateX(0);
+    /* IE 9 */
+    transform: translateX(0);
+    /* Firefox 16+, IE 10+, Opera */
+    -webkit-transition: opacity 0.7s;
+    transition: opacity 0.7s;
+}
+
+#loader-wrapper .loader-section.section-left {
+    left: 0;
+}
+
+#loader-wrapper .loader-section.section-right {
+    right: 0;
+}
+/* Loaded */
+.loaded #loader-wrapper .loader-section.section-left {
+    // -webkit-transform: translateX(-100%);
+    // /* Chrome, Opera 15+, Safari 3.1+ */
+    // -ms-transform: translateX(-100%);
+    // /* IE 9 */
+    // transform: translateX(-100%);
+    // /* Firefox 16+, IE 10+, Opera */
+    // -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    // transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+}
+
+.loaded #loader-wrapper .loader-section.section-right {
+    // -webkit-transform: translateX(100%);
+    // /* Chrome, Opera 15+, Safari 3.1+ */
+    // -ms-transform: translateX(100%);
+    // /* IE 9 */
+    // transform: translateX(100%);
+    // /* Firefox 16+, IE 10+, Opera */
+    // -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    // transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+}
+
+.loaded .ui-loader {
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    display: none;
+}
+
+.loaded #loader {
+    opacity: 0;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.loaded #loader-wrapper {
+    visibility: hidden;
+    -webkit-transform: translateY(-100%);
+    /* Chrome, Opera 15+, Safari 3.1+ */
+    -ms-transform: translateY(-100%);
+    /* IE 9 */
+    transform: translateY(-100%);
+    /* Firefox 16+, IE 10+, Opera */
+    -webkit-transition: all 0.3s 1s ease-out;
+    transition: all 0.3s 1s ease-out;
+
+    .loader-section{
+      opacity:0;
+    }
+}
+/* JavaScript Turned Off */
+.no-js #loader-wrapper {
+    display: none;
+}
+
+.no-js h1 {
+    color: #222222;
+}
+
+#content {
+    margin: 0 auto;
+    padding-bottom: 50px;
+    width: 80%;
+    max-width: 978px;
+}
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+/*
+ * Image replacement
+ */
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+.invisible {
+    visibility: hidden;
+}
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.clearfix:after,
+.clearfix:before {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.clearfix {
+    *zoom: 1;
+}
+
+.spacer20 {
+    margin-top: 20px;
+    display: inline-block;
+    width: 100%;
+}
+
+.back-to-top {
+    width: 40px;
+    height: 40px;
+    @include rounded(5px);
+    display: block;
+    background: rgba(0,0,0,0.2);
+    color: white;
+    position: fixed;
+    bottom: 10px;
+    left: 15px;
+    z-index: 9;
+    cursor: pointer;
+    @include transition();
+    @include opacity(0.5);
+    // display: none;
+
+    &:hover {
+        @include opacity(1);
+        background: $blue;
+        @include grow();
+
+        .fa-arrow-up{
+            color: white;
+        }
+    }
+
+    &:active {
+        @include shrink();
+    }
+
+    .fa-arrow-up {
+        display: block;
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+        color: white;
+        position: absolute;
+        margin: 0 auto;
+        left: 50%;
+        top: 50%;
+        margin-top: -10px;
+        margin-left: -10px;
+        font-weight: 100;
+    }
+}
+
+div.circle-avatar {
+    /* make it responsive */
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+    /* div height to be the same as width*/
+    padding-top: 100%;
+    /* make it a cirkle */
+    border-radius: 50%;
+    /* Centering on image`s center*/
+    background-position-y: center;
+    background-position-x: center;
+    background-repeat: no-repeat;
+    /* it makes the clue thing, takes smaller dimention to fill div */
+    background-size: cover;
+    /* it is optional, for making this div centered in parent*/
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.btn-bordered{
+  background: transparent;
+  border: 3px solid white;
+  color: white;
+  text-shadow: rgba(0,0,0,0.2) 1px 1px 2px;
+  @include box-shadow(inset 2px 2px 3px rgba(0,0,0,0.2), 0px 3px 4px rgba(0,0,0,0.2) !important);
+  padding: 10px 20px;
+  @include rounded(0);
+  @include transition();
+
+  &:focus{
+      background: transparent;
+      border: 3px solid white;
+      color: white;
+      text-shadow: rgba(0,0,0,0.2) 1px 1px 2px;
+      @include box-shadow(inset 2px 2px 3px rgba(0,0,0,0.2), 0px 3px 4px rgba(0,0,0,0.2) !important);
+      padding: 10px 20px;
+      @include rounded(0);
+      @include transition();
+  }
+
+  &:hover {
+      color: white;
+      background: $blue;
+      border-color:$blue;
+      text-shadow:none !important;
+      @include box-shadow(0px 3px 4px rgba(0,0,0,0.2)  !important);
+  }
+
+  &:active {
+      @include drop-shadow(0 !important);
+      margin-top: 2px !important;
+  }
+}
+
+.responsive-tabs-block{
+   margin:40px 0;
+   display:inline-block;
+   width:100%;
+   & > div {
+       width:100%;
+   }
+   p {
+       padding:15px 0;
+   }
+
+   .panel-group{
+       border:1px solid #ccc;
+       margin:0;
+       padding:0;
+       @include rounded(3px);
+       @include box-shadow(0px 3px 4px rgba(0,0,0,0.1)  !important);
+
+       .panel{
+           border-bottom: 1px solid #ccc;
+
+           .panel-heading{
+               .panel-title{
+                   a{
+                       color:$blue !important;
+                       width:100%;
+                       padding:15px;
+                       cursor:pointer;
+                       position: relative;
+                       @include transition();
+                       &:hover, &:focus{
+                           color:$blue !important;
+                       }
+                       &.collapsed{
+                           color:#3b3b3b !important;
+                           &:hover, &:focus{
+                               color:$blue !important;
+                           }
+                       }
+                   }
+                   font-size:15px;
+                   margin:0;
+                   vertical-align: middle;
+               }
+           }
+           .panel-collapse{
+               padding:15px;
+               padding-top:0;
+           }
+       }
+   }
+
+   margin-top:25px;
+   >div:first-child{
+       padding-left:0;
+   }
+   .panel-collapse{
+     padding-top:15px !important;
+   }
+   .nav-link[aria-expanded="true"]{
+     border-bottom:1px solid #ccc;
+     background:rgb(239, 240, 246) !important;
+   }
+   .nav-link:after{
+       display:inline-block;
+       position:absolute;
+       right:0;
+       padding:10px;
+       font-size:17px;
+       font-family:$fontAwesome;
+       top: 0;
+       line-height: 30px;
+       color: #737373;
+       padding-right: 15px;
+       content:"\f067";
+       font-weight:900;
+       font-style: normal;
+       font-variant: normal;
+       text-rendering: auto;
+       -webkit-font-smoothing: antialiased;
+   }
+   .nav-link[aria-expanded="true"]:after{
+     content:"\f068";
+   }
+   .nav-link[aria-expanded="false"]:after{
+     content:"\f067";
+   }
+
+}
+//
+// .tabs-left, .tabs-right {
+//   border-bottom: none;
+//   padding-top: 2px;
+// }
+// .tabs-left {
+//   border-right:0;
+// }
+// .tabs-right {
+//   border-left: 1px solid #ddd;
+// }
+// .tabs-left>li, .tabs-right>li {
+//   float: none;
+//   margin-bottom: 2px;
+//   width:100%;
+//   border:0;
+//   margin:0 !important;
+// }
+// .tabs-left>li {
+//   margin-right: -1px;
+//   a
+//   {
+//       color:#3b3b3b !important;
+//       @include rounded(0) !important;
+//       border:0 !important;
+//       border-right:3px solid #dfdfdf !important;
+//       &.active{
+//           color:$blue !important;
+//           border-right:3px solid $blue !important;
+//       }
+//   }
+// }
+// .tabs-right>li {
+//   margin-left: -1px;
+// }
+// .tabs-left>li.active>a,
+// .tabs-left>li.active>a:hover,
+// .tabs-left>li.active>a:focus {
+//   border-bottom-color: #ddd;
+//   border-right-color: transparent;
+// }
+//
+// .tabs-right>li.active>a,
+// .tabs-right>li.active>a:hover,
+// .tabs-right>li.active>a:focus {
+//   border-bottom: 1px solid #ddd;
+//   border-left-color: transparent;
+// }
+// .tabs-left>li>a {
+//   border-radius: 4px 0 0 4px;
+//   margin-right: 0;
+//   display:block;
+// }
+// .tabs-right>li>a {
+//   border-radius: 0 4px 4px 0;
+//   margin-right: 0;
+// }
+// .sideways {
+//   margin-top:50px;
+//   border: none;
+//   position: relative;
+// }
+// .sideways>li {
+//   height: 20px;
+//   width: 120px;
+//   margin-bottom: 100px;
+// }
+// .sideways>li>a {
+//   border-bottom: 1px solid #ddd;
+//   border-right-color: transparent;
+//   text-align: center;
+//   border-radius: 4px 4px 0px 0px;
+// }
+// .sideways>li.active>a,
+// .sideways>li.active>a:hover,
+// .sideways>li.active>a:focus {
+//   border-bottom-color: transparent;
+//   border-right-color: #ddd;
+//   border-left-color: #ddd;
+// }
+// .sideways.tabs-left {
+//   left: -50px;
+// }
+// .sideways.tabs-right {
+//   right: -50px;
+// }
+// .sideways.tabs-right>li {
+//   -webkit-transform: rotate(90deg);
+//   -moz-transform: rotate(90deg);
+//   -ms-transform: rotate(90deg);
+//   -o-transform: rotate(90deg);
+//   transform: rotate(90deg);
+// }
+// .sideways.tabs-left>li {
+//   -webkit-transform: rotate(-90deg);
+//   -moz-transform: rotate(-90deg);
+//   -ms-transform: rotate(-90deg);
+//   -o-transform: rotate(-90deg);
+//   transform: rotate(-90deg);
+// }
+
+.fc-button{
+  display:block;
+}
+
+// .loading{
+// 	width:40px;
+// 	height:40px;
+// 	position:relative;
+//     content:"";
+// 	display:none;
+//
+// 	&:before{
+// 		background-image:url('../storage/icons/loading.gif');
+// 		background-size:contain;
+// 		background-position: center;
+// 		background-repeat: no-repeat;
+//         content:'';
+// 		display:block;
+// 		width:100%;
+// 		height:100%;
+// 	}
+// 	&.in{
+// 		display:block;
+// 	}
+// }
+
+.parallax{
+//   background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: inset 0px 10px 15px -10px rgba(0,0,0,0.5), inset 0px -10px 15px -10px rgba(0,0,0,0.5);
+  .content{
+    z-index:9;
+  }
+  &.parallax-overlay{
+    &:after{
+      background:rgba(0,0,0,0.5);
+      width:100%;
+      content:"";
+      height:100%;
+      position:absolute;
+      display:block;
+      z-index:1;
+      top:0;
+    }
+  }
+}
+
+.loading {
+  margin: 20px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
+
+  .sk-circle {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0; }
+
+  .sk-circle:before {
+    content: '';
+    display: block;
+    margin: 0 auto;
+    width: 15%;
+    height: 15%;
+    background-color: $blue;
+    border-radius: 100%;
+    -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
+            animation: sk-circleFadeDelay 1.2s infinite ease-in-out both; }
+  .sk-circle2 {
+    -webkit-transform: rotate(30deg);
+        -ms-transform: rotate(30deg);
+            transform: rotate(30deg); }
+  .sk-circle3 {
+    -webkit-transform: rotate(60deg);
+        -ms-transform: rotate(60deg);
+            transform: rotate(60deg); }
+  .sk-circle4 {
+    -webkit-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+            transform: rotate(90deg); }
+  .sk-circle5 {
+    -webkit-transform: rotate(120deg);
+        -ms-transform: rotate(120deg);
+            transform: rotate(120deg); }
+  .sk-circle6 {
+    -webkit-transform: rotate(150deg);
+        -ms-transform: rotate(150deg);
+            transform: rotate(150deg); }
+  .sk-circle7 {
+    -webkit-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+            transform: rotate(180deg); }
+  .sk-circle8 {
+    -webkit-transform: rotate(210deg);
+        -ms-transform: rotate(210deg);
+            transform: rotate(210deg); }
+  .sk-circle9 {
+    -webkit-transform: rotate(240deg);
+        -ms-transform: rotate(240deg);
+            transform: rotate(240deg); }
+  .sk-circle10 {
+    -webkit-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+            transform: rotate(270deg); }
+  .sk-circle11 {
+    -webkit-transform: rotate(300deg);
+        -ms-transform: rotate(300deg);
+            transform: rotate(300deg); }
+  .sk-circle12 {
+    -webkit-transform: rotate(330deg);
+        -ms-transform: rotate(330deg);
+            transform: rotate(330deg); }
+  .sk-circle2:before {
+    -webkit-animation-delay: -1.1s;
+            animation-delay: -1.1s; }
+  .sk-circle3:before {
+    -webkit-animation-delay: -1s;
+            animation-delay: -1s; }
+  .sk-circle4:before {
+    -webkit-animation-delay: -0.9s;
+            animation-delay: -0.9s; }
+  .sk-circle5:before {
+    -webkit-animation-delay: -0.8s;
+            animation-delay: -0.8s; }
+  .sk-circle6:before {
+    -webkit-animation-delay: -0.7s;
+            animation-delay: -0.7s; }
+  .sk-circle7:before {
+    -webkit-animation-delay: -0.6s;
+            animation-delay: -0.6s; }
+  .sk-circle8:before {
+    -webkit-animation-delay: -0.5s;
+            animation-delay: -0.5s; }
+  .sk-circle9:before {
+    -webkit-animation-delay: -0.4s;
+            animation-delay: -0.4s; }
+  .sk-circle10:before {
+    -webkit-animation-delay: -0.3s;
+            animation-delay: -0.3s; }
+  .sk-circle11:before {
+    -webkit-animation-delay: -0.2s;
+            animation-delay: -0.2s; }
+  .sk-circle12:before {
+    -webkit-animation-delay: -0.1s;
+            animation-delay: -0.1s; }
+
+    @-webkit-keyframes sk-circleFadeDelay {
+      0%, 39%, 100% {
+        opacity: 0; }
+      40% {
+        opacity: 1; } }
+    @keyframes sk-circleFadeDelay {
+      0%, 39%, 100% {
+        opacity: 0; }
+      40% {
+        opacity: 1; } }
+}
+
+@mixin backface-visibility($value) {
+
+    -webkit-backface-visibility: $value;
+    -moz-backface-visibility: $value;
+    backface-visibility: $value;
+}

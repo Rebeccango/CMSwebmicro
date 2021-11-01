@@ -1,0 +1,8 @@
+<?php
+return [
+    'PRODUCTION_KEY' => env('PRODUCTION_KEY', ''),
+		'PRODUCTION_PASS' => env('PRODUCTION_PASS', ''),
+		'BILLING_ACCOUNT' => env('BILLING_ACCOUNT', ''),
+		'REGISTERED_ACCOUNT' => env('REGISTERED_ACCOUNT', ''),
+];
+?>

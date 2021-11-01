@@ -1,0 +1,79 @@
+// center vertically and/or horizontally an absolute positioned element
+
+@mixin center($xy:xy) {
+  @if $xy == xy {
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    @include transform(translateX(-50%) translateY(-50%));
+  }
+  @else if $xy == x {
+    left: 50%;
+    right: auto;
+    @include transform(translateX(-50%));
+  }
+  @else if $xy == y {
+    top: 50%;
+    bottom: auto;
+    @include transform(translateY(-50%));
+  }
+}
+
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+  -o-transform: $transforms;
+  -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+  transform: $transforms;
+}
+
+@mixin transition($transition...) {
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transition-property($property...) {
+  -moz-transition-property: $property;
+  -o-transition-property: $property;
+  -webkit-transition-property: $property;
+  transition-property: $property;
+}
+
+@mixin transition-duration($duration...) {
+  -moz-transition-property: $duration;
+  -o-transition-property: $duration;
+  -webkit-transition-property: $duration;
+  transition-property: $duration;
+}
+
+@mixin transition-timing-function($timing...) {
+  -moz-transition-timing-function: $timing;
+  -o-transition-timing-function: $timing;
+  -webkit-transition-timing-function: $timing;
+  transition-timing-function: $timing;
+}
+
+@mixin transition-delay($delay...) {
+  -moz-transition-delay: $delay;
+  -o-transition-delay: $delay;
+  -webkit-transition-delay: $delay;
+  transition-delay: $delay;
+}
+
+@mixin user-select($select:none) {
+  -webkit-touch-callout: $select;
+  -webkit-user-select: $select;
+  -khtml-user-select: $select;
+  -moz-user-select: $select;
+  -ms-user-select: $select;
+  user-select: $select;
+}
+
+@mixin appearance ($value) {
+  -webkit-appearance: $value;
+  -moz-appearance: $value;
+  appearance: $value;
+}

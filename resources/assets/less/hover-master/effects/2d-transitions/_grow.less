@@ -1,0 +1,12 @@
+/* Grow */
+.grow(@scale: 1.1) {
+	.hacks();
+	.prefixed(transition-duration, @mediumDuration);
+	.prefixed(transition-property, transform);
+
+	&:hover,
+	&:focus,
+	&:active {
+		.prefixed(transform, scale(@scale));
+	}
+}

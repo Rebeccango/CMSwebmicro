@@ -1,0 +1,77 @@
+.text-justify {
+	text-align: justify;
+}
+
+.m-x-auto {
+	margin-right: auto !important;
+	margin-left: auto !important;
+}
+
+.m-b-sm {
+	margin-bottom: 1rem;
+}
+
+.m-b-md {
+	margin-bottom: 2rem;
+}
+
+.m-b-xl {
+	margin-bottom: 4rem;
+}
+
+.overflow-hidden {
+	overflow: hidden !important;
+}
+.overflow-auto {
+	overflow: auto !important;
+}
+
+.text-xs {
+	line-height: 1.4em;
+	font-size: 13px;
+}
+
+.text-sm {
+	line-height: 1.7em;
+	font-size: 16px;
+}
+
+.text-md {
+	line-height: 1.8em;
+	font-size: 19px;
+}
+.font-thin {
+    font-weight:300;
+}
+.font-medium {
+    font-weight:500;
+}
+.font-bold{
+    font-weight: 700;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .border#{$infix}-top {      border-top: $border-width solid $border-color !important; }
+    .border#{$infix}-right {    border-right: $border-width solid $border-color !important; }
+    .border#{$infix}-bottom {   border-bottom: $border-width solid $border-color !important; }
+    .border#{$infix}-left {     border-left: $border-width solid $border-color !important; }
+
+    .border#{$infix}-top-0 {    border-top: 0 !important; }
+    .border#{$infix}-right-0 {  border-right: 0 !important; }
+    .border#{$infix}-bottom-0 { border-bottom: 0 !important; }
+    .border#{$infix}-left-0 {   border-left: 0 !important; }
+
+    .border#{$infix}-x {
+      border-left: $border-width solid $border-color !important;
+      border-right: $border-width solid $border-color !important;
+    }
+
+    .border#{$infix}-y {
+      border-top: $border-width solid $border-color !important;
+      border-bottom: $border-width solid $border-color !important;
+    }
+  }
+}
